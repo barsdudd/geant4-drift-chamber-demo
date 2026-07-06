@@ -68,9 +68,15 @@ where `run.mac` contains, e.g.:
 /run/beamOn 100
 ```
 
-`setup.sh` shows the environment variables (Geant4 dataset paths, default
-visualization driver) used on the original machine; adapt the paths to your
-installation if your Geant4 environment is not already configured.
+If your Geant4 environment (dataset paths, visualization driver) is not
+already configured, source `setup.sh` first. It locates the datasets via
+`geant4-config` if that is on your PATH; otherwise pass the dataset
+directory explicitly:
+
+```bash
+source setup.sh                        # auto-detect via geant4-config
+source setup.sh /path/to/Geant4Data    # or specify the dataset directory
+```
 
 ## Track reconstruction
 
