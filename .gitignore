@@ -1,0 +1,24 @@
+# Build artifacts
+build/
+*.o
+*.root
+.hugo_build.lock
+
+# Editor backup files
+*~
+\#*\#
+.\#*
+
+# macOS
+.DS_Store
+
+# Local snapshots / working copies not part of the release
+backup/
+backup_*/
+root_save/
+display_only/
+residual/
+tracking/backup/
+tracking/backup_*/
+tracking/output
+tracking/*.png

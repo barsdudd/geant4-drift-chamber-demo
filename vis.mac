@@ -1,0 +1,55 @@
+/run/initialize
+/vis/open TSGZB 1800x1200-0+0
+/vis/drawVolume
+
+# --- Lighting and visibility improvements ---
+# Shine the light strongly from the upper right
+/vis/viewer/set/lightsVector 1 1 1
+
+# Brighten surfaces and outline edges in black to make shapes clearer
+/vis/viewer/set/style surface
+/vis/viewer/set/hiddenEdge true
+/vis/viewer/set/edge true
+
+# If the object colors look dark, a white background improves contrast
+/vis/viewer/set/background white
+#######################################
+#######################################
+#######################################
+
+# Move the camera target point to the center of the geometry (around Z = 3.5 m)
+/vis/viewer/set/targetPoint 0 0 3.5 m
+
+# Change the viewpoint so the Z axis runs left to right (side view, looking down slightly)
+# /vis/viewer/set/viewpointThetaPhi 270 0
+/vis/viewer/set/viewpointThetaPhi 260 -10
+
+# Adjust the zoom so everything fits in view
+/vis/viewer/zoom 1
+
+# Trajectory drawing settings
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/set proton blue
+/vis/modeling/trajectories/drawByParticleID-0/set mu- red
+/vis/modeling/trajectories/drawByParticleID-0/set mu+ red
+/vis/modeling/trajectories/drawByParticleID-0/set pi+ cyan
+/vis/modeling/trajectories/drawByParticleID-0/set pi- cyan
+/vis/modeling/trajectories/drawByParticleID-0/set neutron black
+/vis/modeling/trajectories/drawByParticleID-0/set photon magenta
+/vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
+
+/vis/modeling/trajectories/drawByParticleID-0/default/setStepPtsSize 4
+
+# Particle filter (thin out showers for better visibility)
+# /vis/filtering/trajectories/create/particleFilter
+# /vis/filtering/trajectories/particleFilter-0/add proton
+# /vis/filtering/trajectories/particleFilter-0/add mu-
+# /vis/filtering/trajectories/particleFilter-0/add mu+
+# /vis/filtering/trajectories/particleFilter-0/add pi+
+# /vis/filtering/trajectories/particleFilter-0/add pi-
+
+
+/vis/scene/endOfEventAction refresh
+# /vis/scene/endOfEventAction accumulate
+# /run/beamOn 1
