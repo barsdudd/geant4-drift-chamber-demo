@@ -10,7 +10,13 @@
 echo "=== Setting up Environment ==="
 
 # 1. Visualization environment settings
-export DISPLAY=${DISPLAY:-:0}
+# Respect an existing DISPLAY. If unset, ask launchd for the XQuartz display
+# (macOS registers it there, e.g. /var/run/com.apple.launchd.*/org.xquartz:0);
+# plain ":0" is only a last resort and is typically rejected by XQuartz.
+if [ -z "$DISPLAY" ]; then
+    command -v launchctl >/dev/null 2>&1 && DISPLAY=$(launchctl getenv DISPLAY)
+    export DISPLAY="${DISPLAY:-:0}"
+fi
 export LIBGL_ALWAYS_SOFTWARE=1
 export G4VIS_DEFAULT_DRIVER=TSGZB
 
