@@ -13,9 +13,12 @@ echo "=== Setting up Environment ==="
 # Respect an existing DISPLAY. If unset, ask launchd for the XQuartz display
 # (macOS registers it there, e.g. /var/run/com.apple.launchd.*/org.xquartz:0);
 # plain ":0" is only a last resort and is typically rejected by XQuartz.
-if [ -z "$DISPLAY" ]; then
-    command -v launchctl >/dev/null 2>&1 && DISPLAY=$(launchctl getenv DISPLAY)
-    export DISPLAY="${DISPLAY:-:0}"
+# On macOS a bare ":0" almost always fails XQuartz authentication
+# ("No protocol specified"), so treat it the same as unset.
+if [ -z "$DISPLAY" ] || { [ "$(uname)" = "Darwin" ] && [ "$DISPLAY" = ":0" ]; }; then
+    launchd_display=""
+    command -v launchctl >/dev/null 2>&1 && launchd_display=$(launchctl getenv DISPLAY)
+    export DISPLAY="${launchd_display:-${DISPLAY:-:0}}"
 fi
 export LIBGL_ALWAYS_SOFTWARE=1
 export G4VIS_DEFAULT_DRIVER=TSGZB
